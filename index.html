@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahid Math Solve</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.1/math.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #4a90e2;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #357abd;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e8f4fd;
+            border-radius: 4px;
+        }
+
+        #output {
+            font-size: 18px;
+            font-weight: bold;
+            color: #d0021b;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sahid Math Solve</h1>
+        <p>Your go-to tool for solving a wide variety of math problems using powerful expression evaluation.</p>
+    </header>
+    <main>
+        <section>
+            <label for="expression">Enter your math expression (e.g., 2 + 2, sin(pi/4), derivative('x^2 + 2x', 'x'), simplify('2x + x')):</label>
+            <textarea id="expression" rows="4" cols="50" placeholder="Type your math here..."></textarea>
+            <button onclick="solveMath()">Solve</button>
+        </section>
+        <section id="result">
+            <h2>Result:</h2>
+            <div id="output"></div>
+        </section>
+        <section>
+            <h3>Examples of what this can solve:</h3>
+            <ul>
+                <li>Basic arithmetic: 5 * (3 + 2)</li>
+                <li>Trigonometry: cos(60 deg)</li>
+                <li>Logarithms: log(100, 10)</li>
+                <li>Exponentials: exp(1)</li>
+                <li>Square roots: sqrt(16)</li>
+                <li>Matrices: [[1,2],[3,4]] * [[5],[6]]</li>
+                <li>Derivatives: derivative('sin(x)', 'x')</li>
+                <li>Simplification: simplify('x^2 + 2x + x')</li>
+                <li>Complex numbers: i^2</li>
+                <li>Units: 2 inch to cm</li>
+                <li>And much more! (Note: For advanced solving like equations, consider numerical methods or extensions.)</li>
+            </ul>
+            <p>This uses math.js for broad math capabilities, but it can't literally solve every possible math problem (as that's impossible for any tool). It handles a vast range of expressions client-side.</p>
+        </section>
+    </main>
+    <script>
+        function solveMath() {
+            const expression = document.getElementById('expression').value;
+            const output = document.getElementById('output');
+            
+            try {
+                // Use math.js to evaluate the expression
+                const result = math.evaluate(expression);
+                output.innerHTML = result.toString(); // Convert to string for display
+                output.style.color = '#008000'; // Green for success
+            } catch (error) {
+                output.innerHTML = 'Error: ' + error.message;
+                output.style.color = '#d0021b'; // Red for error
+            }
+        }
+    </script>
+</body>
+</html>
