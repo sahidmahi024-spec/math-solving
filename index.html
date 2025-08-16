@@ -1,476 +1,139 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title> MATH SOLUTION — Math · Physics · Statistics</title>
-  <style>
-    :root{--bg:#0f1724;--card:#0b1220;--accent:#6ee7b7;--muted:#9aa4b2;--glass:rgba(255,255,255,0.03)}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:#e6eef6;background:linear-gradient(180deg,#071026 0%, #071b2a 60%);min-height:100vh}
-    header{display:flex;align-items:center;gap:16px;padding:20px 24px}
-    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;color:#042024}
-    h1{margin:0;font-size:18px}
-    .subtitle{color:var(--muted);font-size:13px}.container{max-width:1100px;margin:20px auto;padding:18px}
-.grid{display:grid;grid-template-columns:260px 1fr;gap:18px}
-nav{background:var(--card);padding:12px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
-nav button{display:block;width:100%;text-align:left;padding:10px;border-radius:8px;border:none;background:transparent;color:#d9e6f2;margin-bottom:6px;cursor:pointer}
-nav button.active{background:linear-gradient(90deg,rgba(110,231,183,0.08),rgba(96,165,250,0.04));outline:1px solid rgba(110,231,183,0.06)}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahid Math Solve</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.1/math.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
 
-main{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:16px;border-radius:12px;min-height:560px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
-.section{display:none}
-.section.active{display:block}
-.card{background:var(--glass);padding:12px;border-radius:10px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.02)}
-label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-input[type=text], input[type=number], textarea, select{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#e6eef6}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.btn{display:inline-block;padding:8px 12px;border-radius:8px;border:none;background:linear-gradient(90deg,var(--accent),#60a5fa);color:#042024;font-weight:600;cursor:pointer}
-.result{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;border:1px dashed rgba(255,255,255,0.03);color:#e6eef6}
-pre{white-space:pre-wrap;margin:0;font-family:ui-monospace,monospace;background:transparent}
-small.muted{color:var(--muted)}
-footer{padding:10px 24px;color:var(--muted);text-align:center}
-.compact{display:flex;gap:8px}
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-/* responsive */
-@media (max-width:880px){.grid{grid-template-columns:1fr;}.row{grid-template-columns:1fr}.logo{display:none}}
+        h1 {
+            color: #4a90e2;
+        }
 
-  </style>
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #357abd;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e8f4fd;
+            border-radius: 4px;
+        }
+
+        #output {
+            font-size: 18px;
+            font-weight: bold;
+            color: #d0021b;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="logo">US</div>
-    <div>
-      <h1>Universal Solver</h1>
-      <div class="subtitle">Math · Physics · Statistics — By Sahid Akhtar  </div>
-    </div>
-  </header>  <div class="container">
-    <div class="grid">
-      <nav>
-        <button data-target="math" class="active">Mathematics</button>
-        <button data-target="physics">Physics</button>
-        <button data-target="stats">Statistics</button>
-        <button data-target="expr">Expression evaluator</button>
-        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:8px 0">
-        <small class="muted">Hints</small>
-        <p style="font-size:13px;color:var(--muted)">Type functions like <code>sin(x)</code>, <code>sqrt(2)</code>, <code>log(x)</code>. For physics choose a formula and fill known variables.</p>
-      </nav><main>
-    <!-- MATH -->
-    <section id="math" class="section active">
-      <div class="card">
-        <h3>Basic calculator</h3>
-        <label>Expression</label>
-        <input id="basicExpr" type="text" placeholder="e.g. 2+3*sqrt(5) or sin(1.2)" />
-        <div style="margin-top:8px"><button class="btn" onclick="doEval()">Evaluate</button></div>
-        <div style="margin-top:8px" class="result"><pre id="basicResult">—</pre></div>
-      </div>
-
-      <div class="card">
-        <h3>Quadratic equation</h3>
-        <div class="row">
-          <div>
-            <label>a</label>
-            <input id="qa" type="number" step="any" value="1" />
-          </div>
-          <div>
-            <label>b</label>
-            <input id="qb" type="number" step="any" value="0" />
-          </div>
-          <div style="margin-top:10px">
-            <label>c</label>
-            <input id="qc" type="number" step="any" value="-1" />
-          </div>
-          <div style="margin-top:10px;align-self:end">
-            <button class="btn" onclick="solveQuadratic()">Solve</button>
-          </div>
-        </div>
-        <div style="margin-top:8px" class="result"><pre id="quadResult">—</pre></div>
-      </div>
-
-      <div class="card">
-        <h3>System: 2 equations, 2 unknowns</h3>
-        <small class="muted">Solve: a1*x + b1*y = c1  and  a2*x + b2*y = c2</small>
-        <div class="row" style="margin-top:8px">
-          <div>
-            <label>a1</label><input id="a1" type="number" step="any" value="1">
-            <label style="margin-top:6px">b1</label><input id="b1" type="number" step="any" value="2">
-            <label style="margin-top:6px">c1</label><input id="c1" type="number" step="any" value="5">
-          </div>
-          <div>
-            <label>a2</label><input id="a2" type="number" step="any" value="3">
-            <label style="margin-top:6px">b2</label><input id="b2" type="number" step="any" value="-1">
-            <label style="margin-top:6px">c2</label><input id="c2" type="number" step="any" value="4">
-          </div>
-        </div>
-        <div style="margin-top:10px"><button class="btn" onclick="solve2x2()">Solve</button></div>
-        <div style="margin-top:8px" class="result"><pre id="systemResult">—</pre></div>
-      </div>
-
-      <div class="card">
-        <h3>Derivative (numerical)</h3>
-        <label>Function of x (use x as variable)</label>
-        <input id="derivFunc" type="text" placeholder="e.g. sin(x) + x*x" value="sin(x)">
-        <div class="row" style="margin-top:8px">
-          <div><label>x</label><input id="derivX" type="number" step="any" value="1"></div>
-          <div><label>h (step)</label><input id="derivH" type="number" step="any" value="1e-6"></div>
-        </div>
-        <div style="margin-top:8px"><button class="btn" onclick="numericDerivative()">Compute derivative</button></div>
-        <div style="margin-top:8px" class="result"><pre id="derivResult">—</pre></div>
-      </div>
-
-      <div class="card">
-        <h3>Definite integral (Simpson's rule)</h3>
-        <label>Function of x</label>
-        <input id="intFunc" type="text" placeholder="e.g. exp(-x*x)" value="x*x">
-        <div class="row" style="margin-top:8px">
-          <div><label>From</label><input id="intA" type="number" step="any" value="0"></div>
-          <div><label>To</label><input id="intB" type="number" step="any" value="1"></div>
-        </div>
-        <div style="margin-top:8px"><button class="btn" onclick="simpsonIntegrate()">Integrate</button></div>
-        <div style="margin-top:8px" class="result"><pre id="intResult">—</pre></div>
-      </div>
-
-    </section>
-
-    <!-- PHYSICS -->
-    <section id="physics" class="section">
-      <div class="card">
-        <h3>Physics formula pick-and-calc</h3>
-        <label>Choose formula</label>
-        <select id="physFormula" onchange="renderPhysForm()">
-          <option value="kinematic1">Kinematics: v = u + a t</option>
-          <option value="kinematic2">S = ut + 1/2 a t^2</option>
-          <option value="kinematic3">v^2 = u^2 + 2 a s</option>
-          <option value="force">Newton's 2nd law: F = m a</option>
-          <option value="work">Work: W = F * s * cos(theta)</option>
-          <option value="kinetic">Kinetic energy: KE = 1/2 m v^2</option>
-          <option value="grav">Gravitational force: F = G m1 m2 / r^2</option>
-          <option value="idealGas">Ideal gas: PV = n R T</option>
-        </select>
-
-        <div id="physInputs" style="margin-top:12px"></div>
-        <div style="margin-top:8px"><button class="btn" onclick="computePhysics()">Compute</button></div>
-        <div style="margin-top:8px" class="result"><pre id="physResult">—</pre></div>
-      </div>
-
-      <div class="card">
-        <h3>Projectile motion (from speed & angle)</h3>
-        <div class="row">
-          <div>
-            <label>Initial speed (m/s)</label>
-            <input id="projV" type="number" step="any" value="20">
-          </div>
-          <div>
-            <label>Angle (degrees)</label>
-            <input id="projAng" type="number" step="any" value="45">
-          </div>
-        </div>
-        <div style="margin-top:8px"><button class="btn" onclick="projectile()">Compute trajectory</button></div>
-        <div style="margin-top:8px" class="result"><pre id="projResult">—</pre></div>
-      </div>
-
-    </section>
-
-    <!-- STATS -->
-    <section id="stats" class="section">
-      <div class="card">
-        <h3>Descriptive statistics</h3>
-        <label>Enter list of numbers (comma or space separated)</label>
-        <textarea id="statList" rows="3" placeholder="e.g. 1, 2, 3, 4, 5">1,2,3,4,5</textarea>
-        <div style="margin-top:8px"><button class="btn" onclick="describeStats()">Describe</button></div>
-        <div style="margin-top:8px" class="result"><pre id="statResult">—</pre></div>
-      </div>
-
-      <div class="card">
-        <h3>Simple linear regression (y = a + b x)</h3>
-        <label>X values</label>
-        <input id="xr" type="text" placeholder="e.g. 1,2,3,4">
-        <label style="margin-top:6px">Y values</label>
-        <input id="yr" type="text" placeholder="e.g. 2,4,6,8">
-        <div style="margin-top:8px"><button class="btn" onclick="simpleLinearRegression()">Fit</button></div>
-        <div style="margin-top:8px" class="result"><pre id="regResult">—</pre></div>
-      </div>
-
-    </section>
-
-    <!-- EXPRESSION EVALUATOR -->
-    <section id="expr" class="section">
-      <div class="card">
-        <h3>Expression evaluator with named variable support</h3>
-        <label>Expression (use JavaScript/Math style functions)</label>
-        <input id="exprInput" type="text" placeholder="e.g. a*b + sin(x)" />
-        <label style="margin-top:8px">Variables (JSON or simple comma list like a=2,b=3,x=1)</label>
-        <input id="exprVars" type="text" placeholder="a=2,b=3,x=0.5" />
-        <div style="margin-top:8px"><button class="btn" onclick="evalWithVars()">Evaluate</button></div>
-        <div style="margin-top:8px" class="result"><pre id="exprResult">—</pre></div>
-      </div>
-    </section>
-
-  </main>
-</div>
-
-  </div>  <footer>
-    Tip: This is created for the student make easy to solve problems
-  </footer>  <script>
-    // --- basic UI navigation ---
-    document.querySelectorAll('nav button').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        const t = btn.dataset.target;
-        document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-        document.getElementById(t).classList.add('active');
-      });
-    });
-
-    // --- safe-ish expression evaluator ---
-    // allowed Math functions will be exposed under the environment
-    const M = Math;
-    const SAFE = {
-      abs: M.abs, acos: M.acos, asin: M.asin, atan: M.atan, atan2: M.atan2,
-      ceil: M.ceil, cos: M.cos, exp: M.exp, floor: M.floor, log: M.log, max: M.max, min: M.min,
-      pow: M.pow, random: M.random, round: M.round, sin: M.sin, sqrt: M.sqrt, tan: M.tan, PI: M.PI, E: M.E
-    };
-
-    function makeEvaluator(vars={}){
-      // create function with allowed names in scope
-      const names = Object.keys(SAFE).concat(Object.keys(vars));
-      const args = names.join(',');
-      const values = names.map(n=> (n in vars ? vars[n] : SAFE[n]) );
-      // build function
-      return function(expr){
-        try{
-          // eslint-disable-next-line no-new-func
-          const f = new Function(args, 'return ('+expr+');');
-          return f(...values);
-        }catch(e){
-          throw new Error('Evaluation error: '+e.message);
+    <header>
+        <h1>Sahid Math Solve</h1>
+        <p>Your go-to tool for solving a wide variety of math problems using powerful expression evaluation.</p>
+    </header>
+    <main>
+        <section>
+            <label for="expression">Enter your math expression (e.g., 2 + 2, sin(pi/4), derivative('x^2 + 2x', 'x'), simplify('2x + x')):</label>
+            <textarea id="expression" rows="4" cols="50" placeholder="Type your math here..."></textarea>
+            <button onclick="solveMath()">Solve</button>
+        </section>
+        <section id="result">
+            <h2>Result:</h2>
+            <div id="output"></div>
+        </section>
+        <section>
+            <h3>Examples of what this can solve:</h3>
+            <ul>
+                <li>Basic arithmetic: 5 * (3 + 2)</li>
+                <li>Trigonometry: cos(60 deg)</li>
+                <li>Logarithms: log(100, 10)</li>
+                <li>Exponentials: exp(1)</li>
+                <li>Square roots: sqrt(16)</li>
+                <li>Matrices: [[1,2],[3,4]] * [[5],[6]]</li>
+                <li>Derivatives: derivative('sin(x)', 'x')</li>
+                <li>Simplification: simplify('x^2 + 2x + x')</li>
+                <li>Complex numbers: i^2</li>
+                <li>Units: 2 inch to cm</li>
+              
+            </ul>
+    
+        </section>
+    </main>
+    <script>
+        function solveMath() {
+            const expression = document.getElementById('expression').value;
+            const output = document.getElementById('output');
+            
+            try {
+                // Use math.js to evaluate the expression
+                const result = math.evaluate(expression);
+                output.innerHTML = result.toString(); // Convert to string for display
+                output.style.color = '#008000'; // Green for success
+            } catch (error) {
+                output.innerHTML = 'Error: ' + error.message;
+                output.style.color = '#d0021b'; // Red for error
+            }
         }
-      }
-    }
-
-    // Basic eval
-    function doEval(){
-      const expr = document.getElementById('basicExpr').value.trim();
-      const out = document.getElementById('basicResult');
-      if(!expr){out.textContent='Enter an expression.';return}
-      try{
-        const ev = makeEvaluator({});
-        const r = ev(expr);
-        out.textContent = String(r);
-      }catch(e){out.textContent = e.message}
-    }
-
-    // Quadratic
-    function solveQuadratic(){
-      const a = Number(document.getElementById('qa').value);
-      const b = Number(document.getElementById('qb').value);
-      const c = Number(document.getElementById('qc').value);
-      const out = document.getElementById('quadResult');
-      if(a===0){ out.textContent='a must not be 0 (not a quadratic).'; return }
-      const D = b*b-4*a*c;
-      if(D>0){
-        const r1 = (-b + Math.sqrt(D))/(2*a);
-        const r2 = (-b - Math.sqrt(D))/(2*a);
-        out.textContent = Two real roots:\n x1 = ${r1}\n x2 = ${r2};
-      }else if(D===0){
-        const r = -b/(2*a);
-        out.textContent = One real root: x = ${r};
-      }else{
-        const real = -b/(2*a);
-        const imag = Math.sqrt(-D)/(2*a);
-        out.textContent = Two complex roots:\n x1 = ${real} + ${imag}i\n x2 = ${real} - ${imag}i;
-      }
-    }
-
-    // 2x2 system
-    function solve2x2(){
-      const a1=Number(document.getElementById('a1').value), b1=Number(document.getElementById('b1').value), c1=Number(document.getElementById('c1').value);
-      const a2=Number(document.getElementById('a2').value), b2=Number(document.getElementById('b2').value), c2=Number(document.getElementById('c2').value);
-      const out=document.getElementById('systemResult');
-      const det = a1*b2 - a2*b1;
-      if(Math.abs(det) < 1e-12){ out.textContent='Determinant is zero — system may be singular or dependent.'; return }
-      const x = (c1*b2 - c2*b1)/det;
-      const y = (a1*c2 - a2*c1)/det;
-      out.textContent = x = ${x}\n y = ${y};
-    }
-
-    // Numerical derivative
-    function numericDerivative(){
-      const fstr=document.getElementById('derivFunc').value.trim();
-      const x=Number(document.getElementById('derivX').value);
-      let h=Number(document.getElementById('derivH').value);
-      const out=document.getElementById('derivResult');
-      if(!fstr){ out.textContent='Enter a function.'; return }
-      if(!isFinite(h) || h<=0) h = 1e-6;
-      try{
-        const ev = makeEvaluator({x: x+h});
-        const fph = ev(fstr);
-        const ev2 = makeEvaluator({x: x-h});
-        const fmh = ev2(fstr);
-        const deriv = (fph - fmh) / (2*h);
-        out.textContent = f'(${x}) ≈ ${deriv};
-      }catch(e){ out.textContent = e.message }
-    }
-
-    // Simpson integration
-    function simpsonIntegrate(){
-      const fstr=document.getElementById('intFunc').value.trim();
-      let a=Number(document.getElementById('intA').value);
-      let b=Number(document.getElementById('intB').value);
-      const out=document.getElementById('intResult');
-      if(!fstr){ out.textContent='Enter a function.'; return }
-      if(!(isFinite(a) && isFinite(b))){ out.textContent='Invalid limits.'; return }
-      if(a===b){ out.textContent='Integral over zero interval is 0'; return }
-      if(b<a){ [a,b]=[b,a] }
-      // adaptive Simpson with fixed n (must be even)
-      const n = 1000;
-      if(n%2===1) n++;
-      const h = (b-a)/n;
-      try{
-        let s = 0;
-        for(let i=0;i<=n;i++){
-          const x = a + i*h;
-          const ev = makeEvaluator({x});
-          const fx = Number(ev(fstr));
-          const coeff = (i===0||i===n)?1: (i%2===0?2:4);
-          s += coeff * fx;
-        }
-        const integral = (h/3) * s;
-        out.textContent = ≈ ${integral};
-      }catch(e){ out.textContent = e.message }
-    }
-
-    // Physics UI
-    function renderPhysForm(){
-      const which = document.getElementById('physFormula').value;
-      const container = document.getElementById('physInputs');
-      container.innerHTML = '';
-      const input = (id,label,placeholder='')=>{
-        const div = document.createElement('div');
-        div.style.marginBottom='8px';
-        const lab = document.createElement('label'); lab.textContent=label; div.appendChild(lab);
-        const inp = document.createElement('input'); inp.id=id; inp.type='text'; inp.placeholder=placeholder; inp.style.width='100%'; inp.style.padding='8px'; inp.style.borderRadius='6px'; inp.style.background='transparent'; inp.style.border='1px solid rgba(255,255,255,0.04)'; inp.style.color='#e6eef6'; div.appendChild(inp);
-        container.appendChild(div);
-      };
-      switch(which){
-        case 'kinematic1': input('u','u (initial velocity)'); input('a','a (acceleration)'); input('t','t (time)'); break;
-        case 'kinematic2': input('u','u (initial velocity)'); input('a','a (acceleration)'); input('t','t (time)'); break;
-        case 'kinematic3': input('u','u (initial velocity)'); input('a','a (acceleration)'); input('s','s (displacement)'); break;
-        case 'force': input('m','m (mass)'); input('a','a (acceleration)'); break;
-        case 'work': input('F','F (force)'); input('s','s (displacement)'); input('theta','theta (degrees)'); break;
-        case 'kinetic': input('m','m (mass)'); input('v','v (speed)'); break;
-        case 'grav': input('m1','m1 (mass)'); input('m2','m2 (mass)'); input('r','r (distance)'); input('G','G (gravitational constant) — optional (default 6.674e-11)'); break;
-        case 'idealGas': input('P','P (pressure)'); input('V','V (volume)'); input('n','n (moles)'); input('R','R (gas constant) — optional (default 8.314462618)'); input('T','T (temperature)'); break;
-      }
-    }
-    renderPhysForm();
-
-    function computePhysics(){
-      const which = document.getElementById('physFormula').value;
-      const out = document.getElementById('physResult');
-      try{
-        switch(which){
-          case 'kinematic1': {
-            const u=Number(document.getElementById('u').value), a=Number(document.getElementById('a').value), t=Number(document.getElementById('t').value);
-            const v = u + a*t; out.textContent = v = ${v}; break;
-          }
-          case 'kinematic2': {
-            const u=Number(document.getElementById('u').value), a=Number(document.getElementById('a').value), t=Number(document.getElementById('t').value);
-            const s = u*t + 0.5*a*t*t; out.textContent = s = ${s}; break;
-          }
-          case 'kinematic3': {
-            const u=Number(document.getElementById('u').value), a=Number(document.getElementById('a').value), s=Number(document.getElementById('s').value);
-            const v2 = u*u + 2*a*s; out.textContent = v^2 = ${v2}; break;
-          }
-          case 'force': { const m=Number(document.getElementById('m').value), a=Number(document.getElementById('a').value); out.textContent = F = ${m*a}; break; }
-          case 'work': { const F=Number(document.getElementById('F').value), s=Number(document.getElementById('s').value), th=Number(document.getElementById('theta').value||0); out.textContent = W = ${F*s*Math.cos(th*Math.PI/180)}; break; }
-          case 'kinetic': { const m=Number(document.getElementById('m').value), v=Number(document.getElementById('v').value); out.textContent = KE = ${0.5*m*v*v}; break; }
-          case 'grav': { const m1=Number(document.getElementById('m1').value), m2=Number(document.getElementById('m2').value), r=Number(document.getElementById('r').value); let G=Number(document.getElementById('G').value); if(!isFinite(G)) G=6.674e-11; out.textContent = F = ${G*m1*m2/(r*r)}; break; }
-          case 'idealGas': { const P=Number(document.getElementById('P').value), V=Number(document.getElementById('V').value), n=Number(document.getElementById('n').value), T=Number(document.getElementById('T').value); let R=Number(document.getElementById('R').value); if(!isFinite(R)) R=8.314462618; if(!isFinite(P)){ out.textContent=Check inputs. If solving for missing variable, leave it blank and we'll try to compute.; break } out.textContent = Check: P*V = ${P*V} ; n*R*T = ${n*R*T}; break; }
-        }
-      }catch(e){ out.textContent = e.message }
-    }
-
-    function projectile(){
-      const v = Number(document.getElementById('projV').value);
-      const ang = Number(document.getElementById('projAng').value) * Math.PI/180;
-      const g = 9.80665;
-      const vx = v * Math.cos(ang);
-      const vy = v * Math.sin(ang);
-      const t_total = 2*vy/g;
-      const range = vx * t_total;
-      const hmax = (vy*vy)/(2*g);
-      const out = document.getElementById('projResult');
-      out.textContent = Time of flight: ${t_total.toFixed(4)} s\nRange: ${range.toFixed(4)} m\nMax height: ${hmax.toFixed(4)} m;
-    }
-
-    // Stats
-    function parseNumberList(str){
-      if(!str) return [];
-      // split by commas or whitespace
-      return str.split(/[,\s]+/).map(s=>Number(s)).filter(x=>isFinite(x));
-    }
-
-    function describeStats(){
-      const arr = parseNumberList(document.getElementById('statList').value);
-      const out = document.getElementById('statResult');
-      if(arr.length===0){ out.textContent='No numbers parsed.'; return }
-      const n = arr.length;
-      const mean = arr.reduce((a,b)=>a+b,0)/n;
-      const sorted = arr.slice().sort((a,b)=>a-b);
-      const median = (n%2===1)?sorted[(n-1)/2]:(sorted[n/2-1]+sorted[n/2])/2;
-      const variance = arr.reduce((a,b)=>a + (b-mean)*(b-mean),0)/n;
-      const std = Math.sqrt(variance);
-      const modeMap = {}; let maxc=0, mode=null;
-      arr.forEach(v=>{ modeMap[v]=(modeMap[v]||0)+1; if(modeMap[v]>maxc){maxc=modeMap[v]; mode=v}});
-      out.textContent = n = ${n}\nmean = ${mean}\nmedian = ${median}\nmode = ${mode} (count ${maxc})\nvariance = ${variance}\nstd dev = ${std};
-    }
-
-    function simpleLinearRegression(){
-      const xs = parseNumberList(document.getElementById('xr').value);
-      const ys = parseNumberList(document.getElementById('yr').value);
-      const out = document.getElementById('regResult');
-      if(xs.length===0 || ys.length===0 || xs.length !== ys.length){ out.textContent='Ensure X and Y lists are same nonzero length.'; return }
-      const n = xs.length;
-      const mx = xs.reduce((a,b)=>a+b,0)/n;
-      const my = ys.reduce((a,b)=>a+b,0)/n;
-      let num=0, den=0;
-      for(let i=0;i<n;i++){ num += (xs[i]-mx)(ys[i]-my); den += (xs[i]-mx)(xs[i]-mx); }
-      const b = num/den; const a = my - b*mx;
-      // compute r^2
-      let ssres=0, sstot=0;
-      for(let i=0;i<n;i++){ const pred = a + b*xs[i]; ssres += (ys[i]-pred)(ys[i]-pred); sstot += (ys[i]-my)(ys[i]-my); }
-      const r2 = 1 - ssres/sstot;
-      out.textContent = y = ${a} + ${b} x\nR^2 = ${r2};
-    }
-
-    // Expression evaluator with vars
-    function evalWithVars(){
-      const expr = document.getElementById('exprInput').value.trim();
-      const varstr = document.getElementById('exprVars').value.trim();
-      const out = document.getElementById('exprResult');
-      if(!expr){ out.textContent='Enter expression.'; return }
-      const vars = {};
-      if(varstr){
-        // try JSON first
-        try{ Object.assign(vars, JSON.parse(varstr)); }catch(e){
-          // parse a=1,b=2
-          varstr.split(',').forEach(pair=>{
-            const p = pair.split('='); if(p.length===2){ vars[p[0].trim()] = Number(p[1]); }
-          });
-        }
-      }
-      try{
-        const ev = makeEvaluator(vars);
-        const r = ev(expr);
-        out.textContent = String(r);
-      }catch(e){ out.textContent = e.message }
-    }
-
-    // small improvement: allow Enter to evaluate basic input
-    document.getElementById('basicExpr').addEventListener('keydown', e=>{ if(e.key==='Enter'){ doEval(); }});
-
-  </script></body>
+    </script>
+</body>
 </html>
-
